@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/constants/string_constants.dart';
 import '../../core/services/shared_prefs_service.dart';
-import '../../ui_utils/app_logo_widget.dart';
-import '../../ui_utils/loaders/linear_loading_indicator_widget.dart';
-import '../../ui_utils/spacing_utils.dart';
+import '../../core/ui_utils/app_logo_widget.dart';
+import '../../core/ui_utils/loaders/linear_loading_indicator_widget.dart';
+import '../../core/ui_utils/spacing_utils.dart';
 import '../navigation_controller.dart';
 
 class LoaderPage extends StatelessWidget {

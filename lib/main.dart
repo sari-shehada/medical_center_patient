@@ -30,6 +30,7 @@ class Application extends StatelessWidget {
         return GetMaterialApp(
           title: StringConstants.appName,
           theme: lightTheme,
+          locale: const Locale('ar'),
           home: const LoaderPage(),
         );
       },
