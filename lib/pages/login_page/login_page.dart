@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:medical_center_patient/managers/account_manager.dart';
 import 'package:medical_center_patient/models/patient_info.dart';
 import 'package:medical_center_patient/pages/navigation_controller.dart';
 import '../../config/theme/app_colors.dart';
@@ -107,7 +108,9 @@ class _LoginPageState extends State<LoginPage> {
         SnackBarService.showErrorSnackbar('معلومات تسجيل دخول غير صحيحة');
         return;
       }
-      PatientInfo info = PatientInfo.fromMap(decodedResult);
+      PatientInfo userInfo = PatientInfo.fromMap(decodedResult);
+      AccountManager.instance.login(userInfo);
+      NavigationController.toHomePage();
     } finally {
       loginButtonStatus.value = CustomButtonStatus.enabled;
     }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_center_patient/managers/account_manager.dart';
 
 import '../../config/constants/string_constants.dart';
-import '../../core/services/shared_prefs_service.dart';
 import '../../core/ui_utils/app_logo_widget.dart';
 import '../../core/ui_utils/loaders/linear_loading_indicator_widget.dart';
 import '../../core/ui_utils/spacing_utils.dart';
@@ -40,10 +40,11 @@ class LoaderPage extends StatelessWidget {
   }
 
   Future<void> _performInitialLoading() async {
-    int? userId = SharedPreferencesService.instance.getInt('userId');
-    if (userId == null) {
+    await AccountManager.init();
+    if (!AccountManager.instance.isLoggedIn) {
       NavigationController.toLoginPage();
       return;
     }
+    NavigationController.toHomePage();
   }
 }

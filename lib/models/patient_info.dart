@@ -6,7 +6,6 @@ class PatientInfo {
   final String firstName;
   final String lastName;
   final String username;
-  final String password;
   final bool isMale;
   final DateTime dateOfBirth;
   PatientInfo({
@@ -14,7 +13,6 @@ class PatientInfo {
     required this.firstName,
     required this.lastName,
     required this.username,
-    required this.password,
     required this.isMale,
     required this.dateOfBirth,
   });
@@ -25,7 +23,6 @@ class PatientInfo {
       firstName: map['firstName'] as String,
       lastName: map['lastName'] as String,
       username: map['username'] as String,
-      password: map['password'] as String,
       isMale: map['isMale'] as bool,
       dateOfBirth: DateTime.parse(map['dateOfBirth']),
     );

@@ -11,6 +11,7 @@ import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_patient/core/ui_utils/text_fields/custom_text_field.dart';
 import 'package:medical_center_patient/core/widgets/date_time_input_widget.dart';
 import 'package:medical_center_patient/core/widgets/gender_toggle_widget.dart';
+import 'package:medical_center_patient/managers/account_manager.dart';
 import 'package:medical_center_patient/models/patient_info.dart';
 import 'package:medical_center_patient/pages/navigation_controller.dart';
 import 'package:medical_center_patient/pages/sign_up_page/models/patient_sign_up_request_model.dart';
@@ -93,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
             CustomFilledButton(
               onTap: () => signUp(),
               buttonStatus: signUpButtonStatus,
-              child: 'تسجيل الدخول',
+              child: 'إنشاء حساب',
             ),
             AddVerticalSpacing(value: 13.h),
             Row(
@@ -150,8 +151,10 @@ class _SignUpPageState extends State<SignUpPage> {
       );
       Map decodedResult = jsonDecode(requestResult.body) as Map;
       if (requestResult.statusCode == 201) {
-        PatientInfo info =
+        PatientInfo userInfo =
             PatientInfo.fromMap(decodedResult as Map<String, dynamic>);
+        await AccountManager.instance.login(userInfo);
+        NavigationController.toHomePage();
         return;
       }
       if (requestResult.statusCode == 400) {
