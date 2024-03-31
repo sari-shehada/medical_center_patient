@@ -40,18 +40,23 @@ class _LoginPageState extends State<LoginPage> {
             AddVerticalSpacing(value: 20.h),
             Align(
               child: Text(
-                'مرحيا بك في المركز الطبي',
+                'مرحبا بك في المركز الطبي',
                 style: TextStyle(
                   fontSize: 26.sp,
                   color: primaryColor,
                 ),
               ),
             ),
-            AddVerticalSpacing(value: 16.h),
-            const Align(
-              child: Text('تسجيل الدخول'),
+            AddVerticalSpacing(value: 8.h),
+            Align(
+              child: Text(
+                'تسجيل الدخول',
+                style: TextStyle(
+                  fontSize: 19.sp,
+                ),
+              ),
             ),
-            AddVerticalSpacing(value: 15.h),
+            AddVerticalSpacing(value: 24.h),
             CustomTextField(
               controller: usernameController,
               textDirection: TextDirection.ltr,

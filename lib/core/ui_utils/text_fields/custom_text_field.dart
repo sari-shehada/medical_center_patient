@@ -9,7 +9,9 @@ class CustomTextField extends StatelessWidget {
     this.hintText,
     this.label,
     this.color,
+    this.textSize,
     this.obscureText = false,
+    this.isDense = false,
     this.suffixIcon,
     this.maxLength,
     this.keyboardType,
@@ -24,7 +26,9 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final String? label;
   final Color? color;
+  final double? textSize;
   final IconData? suffixIcon;
+  final bool? isDense;
   final VoidCallback? suffixIconOnTap;
   final int? maxLength;
   final bool obscureText;
@@ -37,7 +41,7 @@ class CustomTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: obscureText,
-      style: TextStyle(color: color),
+      style: TextStyle(color: color, fontSize: textSize),
       textDirection: textDirection,
       decoration: InputDecoration(
         fillColor: const Color(0xFFDEECE8),
@@ -46,6 +50,7 @@ class CustomTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
         ),
+        isDense: isDense,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
@@ -53,19 +58,21 @@ class CustomTextField extends StatelessWidget {
           ),
         ),
         hintText: hintText,
-        hintStyle: const TextStyle(
+        hintStyle: TextStyle(
           color: Colors.grey,
+          fontSize: textSize,
         ),
         label: label != null
             ? Text(
                 label!,
-                style: TextStyle(color: color),
+                style: TextStyle(color: color, fontSize: textSize),
               )
             : null,
         prefixIcon: Icon(
           leadingIcon,
           color: color,
         ),
+        contentPadding: EdgeInsets.zero,
         prefixIconColor: MaterialStateColor.resolveWith(
           (state) {
             if (state.isEmpty) {

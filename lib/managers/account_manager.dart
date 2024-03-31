@@ -1,3 +1,4 @@
+import 'package:medical_center_patient/core/exceptions/not_found_exception.dart';
 import 'package:medical_center_patient/core/services/http_service.dart';
 import 'package:medical_center_patient/core/services/shared_prefs_service.dart';
 import 'package:medical_center_patient/models/patient_info.dart';
@@ -14,14 +15,19 @@ class AccountManager {
   static late AccountManager instance;
 
   static Future<AccountManager> init() async {
-    final int? userId = _getUserIdFromLocalStorage();
-    if (userId == null) {
+    try {
+      final int? userId = _getUserIdFromLocalStorage();
+      if (userId == null) {
+        instance = AccountManager._(user: null, isLoggedIn: false);
+        return instance;
+      }
+      final PatientInfo user = await _getPatientInfo(userId);
+      instance = AccountManager._(user: user, isLoggedIn: true);
+      return instance;
+    } on NotFoundException catch (_) {
       instance = AccountManager._(user: null, isLoggedIn: false);
       return instance;
     }
-    final PatientInfo user = await _getPatientInfo(userId);
-    instance = AccountManager._(user: user, isLoggedIn: true);
-    return instance;
   }
 
   Future<void> login(PatientInfo userInfo) async {

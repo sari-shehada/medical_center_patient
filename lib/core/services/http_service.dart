@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'package:medical_center_patient/core/exceptions/not_found_exception.dart';
 
 import '../extensions/maps_extensions/map_extensions.dart';
 import 'package:dio/dio.dart';
@@ -44,12 +45,13 @@ class HttpService {
     required String endPoint,
     Map<String, dynamic>? body,
   }) async {
-    body = body?.toStringStringMap();
+    // body = body?.toStringStringMap();
     http.Response response = await http.post(
       Uri.parse(
         _getCombinedUrl(baseUrl, endPoint),
       ),
-      body: body,
+      body: jsonEncode(body),
+      headers: {'Content-Type': 'application/json'},
     );
     String rawResponse = response.body;
     return rawResponse;
@@ -65,10 +67,12 @@ class HttpService {
           baseUrl,
           endPoint,
           query: queryParams,
-          requestJsonFormatting: true,
         ),
       ),
     );
+    if (response.statusCode == 404) {
+      throw NotFoundException();
+    }
     String rawResponse = response.body;
     return rawResponse;
   }

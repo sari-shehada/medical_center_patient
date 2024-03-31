@@ -23,16 +23,19 @@ class LoaderPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const AppLogoWidget(),
             AddVerticalSpacing(value: 130.h),
+            AppLogoWidget(
+              size: 200.sp,
+            ),
+            AddVerticalSpacing(value: 100.h),
+            const LinearLoadingIndicatorWidget(),
+            AddVerticalSpacing(value: 10.h),
             Text(
               StringConstants.appNameAr,
               style: TextStyle(
-                fontSize: 22.sp,
+                fontSize: 25.sp,
               ),
             ),
-            AddVerticalSpacing(value: 10.h),
-            const LinearLoadingIndicatorWidget(),
           ],
         ),
       ),

@@ -10,8 +10,10 @@ class AppLogoWidget extends StatelessWidget {
   final double? size;
   @override
   Widget build(BuildContext context) {
-    return FlutterLogo(
-      size: size ?? 150.sp,
+    return Image.asset(
+      'assets/app_logo.png',
+      height: size ?? 30.sp,
+      width: size ?? 30.sp,
     );
   }
 }

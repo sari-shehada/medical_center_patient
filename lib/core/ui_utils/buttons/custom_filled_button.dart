@@ -37,8 +37,12 @@ class CustomFilledButton extends StatelessWidget {
     if (buttonStatus == null) {
       return _buildContainer(
         context,
-        child: Center(
-          child: _buildChild(),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: borderRadius,
+          child: Center(
+            child: _buildChild(),
+          ),
         ),
       );
     }
