@@ -154,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
         PatientInfo userInfo =
             PatientInfo.fromMap(decodedResult as Map<String, dynamic>);
         await AccountManager.instance.login(userInfo);
-        NavigationController.toHomePage();
+        NavigationController.toDashboard();
         return;
       }
       if (requestResult.statusCode == 400) {

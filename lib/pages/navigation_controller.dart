@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
-import 'package:medical_center_patient/pages/home_page/home_page.dart';
+import 'package:medical_center_patient/pages/dashboard/dashboard.dart';
+import 'package:medical_center_patient/pages/diagnosis_details_page/diagnosis_details_page.dart';
+import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
 import 'package:medical_center_patient/pages/loader_page/loader_page.dart';
 import 'package:medical_center_patient/pages/login_page/login_page.dart';
 import 'package:medical_center_patient/pages/new_diagnosis/symptoms_selection_page.dart';
@@ -26,15 +28,25 @@ abstract class NavigationController {
     );
   }
 
-  static Future<void> toHomePage() async {
+  static Future<void> toDashboard() async {
     Get.offAll(
-      () => const HomePage(),
+      () => const Dashboard(),
     );
   }
 
   static Future<void> startNewDiagnosis() async {
     Get.to(
       () => const SymptomsSelectionPage(),
+    );
+  }
+
+  static Future<void> toDiagnosisDetailsPage({
+    required MedicalDiagnosisDetails diagnosisDetails,
+  }) async {
+    Get.to(
+      () => MedicalDiagnosisDetailsPage(
+        diagnosisDetails: diagnosisDetails,
+      ),
     );
   }
 }

@@ -28,51 +28,53 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox.expand(
-        child: Column(
-          children: [
-            AddVerticalSpacing(
-              value: MediaQuery.paddingOf(context).top + 15.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.w),
-              child: const HomePageTopHeaderWidget(),
-            ),
-            AddVerticalSpacing(value: 8.h),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 10.w),
-                children: [
-                  AddVerticalSpacing(value: 10.h),
-                  const StartDiagnosisHomePageButton(),
-                  AddVerticalSpacing(value: 10.h),
-                  Row(
-                    children: [
-                      const Icon(Icons.history),
-                      AddHorizontalSpacing(value: 5.w),
-                      const Text('سجل التشخيصات:'),
-                    ],
-                  ),
-                  AddVerticalSpacing(value: 10.h),
-                  CustomFutureBuilder(
-                    future: diagnosisHistory,
-                    builder: (context, snapshot) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: List.generate(
-                        snapshot.length,
-                        (index) => MedicalDiagnosisWidget(
-                          diagnosisDetails: snapshot[index],
-                        ),
+    return Column(
+      children: [
+        AddVerticalSpacing(
+          value: MediaQuery.paddingOf(context).top + 15.h,
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
+          child: const HomePageTopHeaderWidget(),
+        ),
+        AddVerticalSpacing(value: 8.h),
+        Expanded(
+          child: RefreshIndicator(
+            onRefresh: () async {
+              diagnosisHistory = getDiagnosisHistory();
+              setState(() {});
+            },
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              children: [
+                AddVerticalSpacing(value: 10.h),
+                const StartDiagnosisHomePageButton(),
+                AddVerticalSpacing(value: 10.h),
+                Row(
+                  children: [
+                    const Icon(Icons.history),
+                    AddHorizontalSpacing(value: 5.w),
+                    const Text('سجل التشخيصات:'),
+                  ],
+                ),
+                AddVerticalSpacing(value: 10.h),
+                CustomFutureBuilder(
+                  future: diagnosisHistory,
+                  builder: (context, snapshot) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: List.generate(
+                      snapshot.length,
+                      (index) => MedicalDiagnosisWidget(
+                        diagnosisDetails: snapshot[index],
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
@@ -95,15 +97,61 @@ class MedicalDiagnosisWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(diagnosisDetails.diseaseDetails.disease.name),
+      onTap: () => NavigationController.toDiagnosisDetailsPage(
+        diagnosisDetails: diagnosisDetails,
+      ),
+      title: Text(
+        diagnosisDetails.diseaseDetails.disease.name,
+        style: TextStyle(
+          fontSize: 19.sp,
+          color: primaryColor,
+        ),
+      ),
       subtitle: Row(
         children: [
-          const Text(
-            'تاريخ التشخيص',
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  'تاريخ التشخيص',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  diagnosisDetails.diagnosis.diagnosisDateTime.getDateOnly(),
+                  style: const TextStyle(
+                    color: secondary,
+                  ),
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
-          Text(
-            diagnosisDetails.diagnosis.diagnosisDateTime.getDateOnly(),
+          Container(
+            height: 10.h,
+            width: 1.w,
+            margin: EdgeInsets.symmetric(horizontal: 10.w),
+            color: Colors.grey,
+          ),
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  'عدد الأعراض المدخلة',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                  ),
+                ),
+                const Spacer(),
+                Text(
+                  diagnosisDetails.symptoms.length.toString(),
+                  style: const TextStyle(
+                    color: secondary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

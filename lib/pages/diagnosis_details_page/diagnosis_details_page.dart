@@ -1,15 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_center_patient/config/theme/app_colors.dart';
 import 'package:medical_center_patient/core/extensions/date_time_extensions.dart';
 import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
 
-class MedicalDiagnosisDetailsPage extends StatelessWidget {
+class MedicalDiagnosisDetailsPage extends StatefulWidget {
   const MedicalDiagnosisDetailsPage(
       {super.key, required this.diagnosisDetails});
 
   final MedicalDiagnosisDetails diagnosisDetails;
+
+  @override
+  State<MedicalDiagnosisDetailsPage> createState() =>
+      _MedicalDiagnosisDetailsPageState();
+}
+
+class _MedicalDiagnosisDetailsPageState
+    extends State<MedicalDiagnosisDetailsPage> with TickerProviderStateMixin {
+  late TabController tabController;
+
+  @override
+  void initState() {
+    tabController = TabController(vsync: this, length: 2);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,35 +40,39 @@ class MedicalDiagnosisDetailsPage extends StatelessWidget {
       ),
       body: SizedBox.expand(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 9.w),
+          padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 10.h),
           children: [
-            Text(
-              'المرض المتنبأ به',
-              style: TextStyle(
-                fontSize: 13.sp,
+            Align(
+              child: Text(
+                widget.diagnosisDetails.diseaseDetails.disease.name,
+                style: TextStyle(
+                  fontSize: 30.sp,
+                  color: primaryColor,
+                ),
               ),
             ),
-            AddVerticalSpacing(value: 10.h),
-            Text(
-              diagnosisDetails.diseaseDetails.disease.name,
-              style: TextStyle(
-                fontSize: 27.sp,
-                color: primaryColor,
+            AddVerticalSpacing(value: 5.h),
+            Align(
+              child: Text(
+                'المرض المتنبأ به',
+                style: TextStyle(
+                  fontSize: 13.sp,
+                ),
               ),
             ),
-            const Divider(),
             TitleDetailsSpacedWidget(
               title: 'تاريخ التشخيص',
-              details:
-                  diagnosisDetails.diagnosis.diagnosisDateTime.getDateOnly(),
+              details: widget.diagnosisDetails.diagnosis.diagnosisDateTime
+                  .getDateOnly(),
             ),
             TitleDetailsSpacedWidget(
               title: 'تم طلب معاينة من قبل احد الأطباء؟',
-              details: diagnosisDetails.diagnosis.isSubmittedForFurtherFollowup
+              details: widget
+                      .diagnosisDetails.diagnosis.isSubmittedForFurtherFollowup
                   ? 'نعم'
                   : 'لا',
             ),
-            const Divider(),
+            const CustomDivider(),
             Text(
               'الأعراض المدخلة:',
               style: TextStyle(
@@ -61,25 +83,39 @@ class MedicalDiagnosisDetailsPage extends StatelessWidget {
             GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisExtent: 40.h,
+                mainAxisSpacing: 5.h,
+                mainAxisExtent: 36.h,
                 crossAxisSpacing: 6.w,
               ),
               shrinkWrap: true,
-              itemCount: diagnosisDetails.symptoms.length,
+              itemCount: widget.diagnosisDetails.symptoms.length,
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15.r),
+                    borderRadius: BorderRadius.circular(10.r),
                     color: primaryContainer,
                   ),
                   alignment: Alignment.center,
-                  child: Text(diagnosisDetails.symptoms[index].name),
+                  child: Text(widget.diagnosisDetails.symptoms[index].name),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomDivider extends StatelessWidget {
+  const CustomDivider({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Divider(
+      color: Colors.grey.withOpacity(0.5),
     );
   }
 }
@@ -99,9 +135,26 @@ class TitleDetailsSpacedWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
       child: Row(
         children: [
-          Text(title),
+          Icon(
+            Icons.history,
+            color: Colors.grey.shade700,
+          ),
+          AddHorizontalSpacing(value: 6.w),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 15.sp,
+              color: Colors.grey.shade700,
+            ),
+          ),
           const Spacer(),
-          Text(details),
+          Text(
+            details,
+            style: TextStyle(
+              fontSize: 15.sp,
+              color: secondary,
+            ),
+          ),
         ],
       ),
     );

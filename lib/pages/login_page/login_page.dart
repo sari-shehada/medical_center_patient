@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
             CustomTextField(
               controller: usernameController,
               textDirection: TextDirection.ltr,
+              inputAction: TextInputAction.next,
               label: 'اسم المستخدم',
             ),
             AddVerticalSpacing(value: 15.h),
@@ -115,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       PatientInfo userInfo = PatientInfo.fromMap(decodedResult);
       AccountManager.instance.login(userInfo);
-      NavigationController.toHomePage();
+      NavigationController.toDashboard();
     } finally {
       loginButtonStatus.value = CustomButtonStatus.enabled;
     }

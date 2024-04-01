@@ -251,7 +251,6 @@ class _SymptomsSelectionPageBodyState
         () => MedicalDiagnosisDetailsPage(diagnosisDetails: result),
       );
     } catch (e) {
-      print(e);
       if (!dismissedLoaderSheet) {
         Get.back();
       }

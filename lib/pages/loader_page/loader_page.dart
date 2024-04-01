@@ -48,6 +48,6 @@ class LoaderPage extends StatelessWidget {
       NavigationController.toLoginPage();
       return;
     }
-    NavigationController.toHomePage();
+    NavigationController.toDashboard();
   }
 }
