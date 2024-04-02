@@ -7,6 +7,7 @@ import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_patient/core/ui_utils/text_fields/custom_text_field.dart';
 import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_patient/managers/account_manager.dart';
+import 'package:medical_center_patient/managers/diagnosis_history_manager.dart';
 import 'package:medical_center_patient/models/symptom.dart';
 import 'package:medical_center_patient/pages/diagnosis_details_page/diagnosis_details_page.dart';
 import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
@@ -250,6 +251,7 @@ class _SymptomsSelectionPageBodyState
       Get.off(
         () => MedicalDiagnosisDetailsPage(diagnosisDetails: result),
       );
+      DiagnosisHistoryManager.instance.updateHistory();
     } catch (e) {
       if (!dismissedLoaderSheet) {
         Get.back();
