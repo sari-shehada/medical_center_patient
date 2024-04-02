@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:medical_center_patient/pages/dashboard/dashboard.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/diagnosis_details_page.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
-import 'package:medical_center_patient/pages/loader_page/loader_page.dart';
-import 'package:medical_center_patient/pages/login_page/login_page.dart';
-import 'package:medical_center_patient/pages/new_diagnosis/symptoms_selection_page.dart';
-import 'package:medical_center_patient/pages/sign_up_page/sign_up_page.dart';
+import 'dashboard/dashboard.dart';
+import 'diagnosis_details_page/diagnosis_details_page.dart';
+import 'diagnosis_details_page/models/medical_diagnosis_details.dart';
+import 'loader_page/loader_page.dart';
+import 'login_page/login_page.dart';
+import 'new_diagnosis/symptoms_selection_page.dart';
+import 'sign_up_page/sign_up_page.dart';
 
 abstract class NavigationController {
   static Future<void> toLoginPage({

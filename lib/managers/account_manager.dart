@@ -1,7 +1,7 @@
-import 'package:medical_center_patient/core/exceptions/not_found_exception.dart';
-import 'package:medical_center_patient/core/services/http_service.dart';
-import 'package:medical_center_patient/core/services/shared_prefs_service.dart';
-import 'package:medical_center_patient/models/patient_info.dart';
+import '../core/exceptions/not_found_exception.dart';
+import '../core/services/http_service.dart';
+import '../core/services/shared_prefs_service.dart';
+import '../models/patient_info.dart';
 
 class AccountManager {
   AccountManager._({

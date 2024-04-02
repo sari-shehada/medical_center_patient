@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medical_center_patient/core/services/http_service.dart';
-import 'package:medical_center_patient/managers/account_manager.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
+import '../core/services/http_service.dart';
+import 'account_manager.dart';
+import '../pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
 
 class DiagnosisHistoryManager with ChangeNotifier {
   DiagnosisHistoryManager._();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/extensions/date_time_extensions.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
+import '../../config/theme/app_colors.dart';
+import '../extensions/date_time_extensions.dart';
+import '../ui_utils/spacing_utils.dart';
 
 class DateTimeInputWidget extends StatelessWidget {
   const DateTimeInputWidget({

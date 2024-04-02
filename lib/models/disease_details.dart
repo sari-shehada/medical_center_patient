@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-
 import 'package:medical_center_patient/models/disease.dart';
 import 'package:medical_center_patient/models/disease_external_link.dart';
 import 'package:medical_center_patient/models/medicine.dart';

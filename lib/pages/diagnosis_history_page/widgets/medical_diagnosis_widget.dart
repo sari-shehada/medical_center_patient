@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/extensions/date_time_extensions.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
-import 'package:medical_center_patient/pages/navigation_controller.dart';
+import '../../../config/theme/app_colors.dart';
+import '../../../core/extensions/date_time_extensions.dart';
+import '../../diagnosis_details_page/models/medical_diagnosis_details.dart';
+import '../../navigation_controller.dart';
 
 class MedicalDiagnosisWidget extends StatelessWidget {
   const MedicalDiagnosisWidget({

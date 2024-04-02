@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:medical_center_patient/config/theme/app_theme.dart';
 
 import 'config/constants/string_constants.dart';
+import 'config/theme/app_theme.dart';
 import 'core/services/shared_prefs_service.dart';
 import 'pages/loader_page/loader_page.dart';
 

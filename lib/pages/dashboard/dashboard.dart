@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medical_center_patient/pages/diagnosis_history_page/diagnosis_history_page.dart';
-import 'package:medical_center_patient/pages/home_page/home_page.dart';
+import '../diagnosis_history_page/diagnosis_history_page.dart';
+import '../home_page/home_page.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

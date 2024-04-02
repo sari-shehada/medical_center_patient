@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_patient/managers/diagnosis_history_manager.dart';
-import 'package:medical_center_patient/pages/diagnosis_history_page/widgets/medical_diagnosis_widget.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../managers/diagnosis_history_manager.dart';
+import 'widgets/medical_diagnosis_widget.dart';
 
 class DiagnosisHistoryPage extends StatefulWidget {
   const DiagnosisHistoryPage({super.key});

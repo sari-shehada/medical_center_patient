@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/services/http_service.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/core/ui_utils/text_fields/custom_text_field.dart';
-import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_patient/managers/account_manager.dart';
-import 'package:medical_center_patient/managers/diagnosis_history_manager.dart';
-import 'package:medical_center_patient/models/symptom.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/diagnosis_details_page.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
-import 'package:medical_center_patient/pages/navigation_controller.dart';
+import '../../config/theme/app_colors.dart';
+import '../../core/services/http_service.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/ui_utils/text_fields/custom_text_field.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../managers/account_manager.dart';
+import '../../managers/diagnosis_history_manager.dart';
+import '../../models/symptom.dart';
+import '../diagnosis_details_page/diagnosis_details_page.dart';
+import '../diagnosis_details_page/models/medical_diagnosis_details.dart';
+import '../navigation_controller.dart';
 
 class SymptomsSelectionPage extends StatefulWidget {
   const SymptomsSelectionPage({super.key});
@@ -24,8 +24,15 @@ class _SymptomsSelectionPageState extends State<SymptomsSelectionPage> {
   late Future<List<Symptom>> symptomsListFuture;
 
   Future<List<Symptom>> _getSymptoms() async {
-    return await HttpService.parsedMultiGet(
+    var stopwatch = Stopwatch();
+    stopwatch.start();
+    var result = await HttpService.parsedMultiGet(
         endPoint: 'symptoms/', mapper: Symptom.fromMap);
+    stopwatch.stop();
+    if (stopwatch.elapsedMilliseconds < 2000) {
+      await Future.delayed(1500.milliseconds);
+    }
+    return result;
   }
 
   @override
@@ -110,9 +117,6 @@ class _SymptomsSelectionPageBodyState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AddVerticalSpacing(
-          value: MediaQuery.paddingOf(context).top,
-        ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           decoration: BoxDecoration(
@@ -128,6 +132,9 @@ class _SymptomsSelectionPageBodyState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              AddVerticalSpacing(
+                value: MediaQuery.paddingOf(context).top,
+              ),
               SizedBox(
                 height: kToolbarHeight,
                 child: Row(

@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/extensions/date_time_extensions.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
+import '../../config/theme/app_colors.dart';
+import '../../core/extensions/date_time_extensions.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../models/disease_external_link.dart';
+import 'models/medical_diagnosis_details.dart';
 
 class MedicalDiagnosisDetailsPage extends StatefulWidget {
   const MedicalDiagnosisDetailsPage(
@@ -39,68 +38,105 @@ class _MedicalDiagnosisDetailsPageState
         titleSpacing: 0,
       ),
       body: SizedBox.expand(
-        child: ListView(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 9.w, vertical: 10.h),
-          children: [
-            Align(
-              child: Text(
-                widget.diagnosisDetails.diseaseDetails.disease.name,
-                style: TextStyle(
-                  fontSize: 30.sp,
-                  color: primaryColor,
-                ),
-              ),
-            ),
-            AddVerticalSpacing(value: 5.h),
-            Align(
-              child: Text(
-                'المرض المتنبأ به',
-                style: TextStyle(
-                  fontSize: 13.sp,
-                ),
-              ),
-            ),
-            TitleDetailsSpacedWidget(
-              title: 'تاريخ التشخيص',
-              details: widget.diagnosisDetails.diagnosis.diagnosisDateTime
-                  .getDateOnly(),
-            ),
-            TitleDetailsSpacedWidget(
-              title: 'تم طلب معاينة من قبل احد الأطباء؟',
-              details: widget
-                      .diagnosisDetails.diagnosis.isSubmittedForFurtherFollowup
-                  ? 'نعم'
-                  : 'لا',
-            ),
-            const CustomDivider(),
-            Text(
-              'الأعراض المدخلة:',
-              style: TextStyle(
-                fontSize: 18.sp,
-              ),
-            ),
-            AddVerticalSpacing(value: 10.h),
-            GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 5.h,
-                mainAxisExtent: 36.h,
-                crossAxisSpacing: 6.w,
-              ),
-              shrinkWrap: true,
-              itemCount: widget.diagnosisDetails.symptoms.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    color: primaryContainer,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                child: Text(
+                  widget.diagnosisDetails.diseaseDetails.disease.name,
+                  style: TextStyle(
+                    fontSize: 30.sp,
+                    color: primaryColor,
                   ),
-                  alignment: Alignment.center,
-                  child: Text(widget.diagnosisDetails.symptoms[index].name),
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+              AddVerticalSpacing(value: 5.h),
+              Align(
+                child: Text(
+                  'المرض المتنبأ به',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                  ),
+                ),
+              ),
+              TitleDetailsSpacedWidget(
+                icon: Icons.history,
+                title: 'تاريخ التشخيص',
+                details: widget.diagnosisDetails.diagnosis.diagnosisDateTime
+                    .getDateOnly(),
+              ),
+              TitleDetailsSpacedWidget(
+                icon: Icons.monitor_heart_outlined,
+                title: 'تم طلب معاينة من قبل احد الأطباء؟',
+                details: widget.diagnosisDetails.diagnosis
+                        .isSubmittedForFurtherFollowup
+                    ? 'نعم'
+                    : 'لا',
+              ),
+              const CustomDivider(),
+              Text(
+                'الأعراض المدخلة:',
+                style: TextStyle(
+                  fontSize: 18.sp,
+                ),
+              ),
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 5.h,
+                  mainAxisExtent: 36.h,
+                  crossAxisSpacing: 6.w,
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 5.w,
+                  vertical: 10.h,
+                ),
+                shrinkWrap: true,
+                itemCount: widget.diagnosisDetails.symptoms.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      color: primaryContainer,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(widget.diagnosisDetails.symptoms[index].name),
+                  );
+                },
+              ),
+              const CustomDivider(),
+              TabBar(
+                controller: tabController,
+                tabs: [
+                  SizedBox(
+                    height: 30.h,
+                    child: const Text('أدوية مقترحة'),
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                    child: const Text('بعض المقالات المفيدة'),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  controller: tabController,
+                  children: [
+                    ExternalLinksListWidget(
+                      externalLinks:
+                          widget.diagnosisDetails.diseaseDetails.externalLinks,
+                    ),
+                    ExternalLinksListWidget(
+                      externalLinks:
+                          widget.diagnosisDetails.diseaseDetails.externalLinks,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -123,10 +159,12 @@ class CustomDivider extends StatelessWidget {
 class TitleDetailsSpacedWidget extends StatelessWidget {
   const TitleDetailsSpacedWidget({
     super.key,
+    required this.icon,
     required this.title,
     required this.details,
   });
 
+  final IconData icon;
   final String title;
   final String details;
   @override
@@ -136,7 +174,7 @@ class TitleDetailsSpacedWidget extends StatelessWidget {
       child: Row(
         children: [
           Icon(
-            Icons.history,
+            icon,
             color: Colors.grey.shade700,
           ),
           AddHorizontalSpacing(value: 6.w),
@@ -156,6 +194,30 @@ class TitleDetailsSpacedWidget extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ExternalLinksListWidget extends StatelessWidget {
+  const ExternalLinksListWidget({
+    super.key,
+    required this.externalLinks,
+  });
+  final List<DiseaseExternalLink> externalLinks;
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+        externalLinks.length,
+        (index) {
+          DiseaseExternalLink link = externalLinks[index];
+          return ListTile(
+            title: Text(link.title),
+            subtitle: Text(link.link),
+          );
+        },
       ),
     );
   }
