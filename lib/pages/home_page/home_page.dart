@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../config/theme/app_colors.dart';
+import 'package:medical_center_patient/config/theme/app_colors.dart';
+import 'package:medical_center_patient/core/services/http_service.dart';
+import 'package:medical_center_patient/core/ui_utils/loaders/linear_loading_indicator_widget.dart';
+import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
+import 'package:medical_center_patient/pages/diagnosis_details_page/diagnosis_details_page.dart';
+import 'package:medical_center_patient/pages/home_page/models/disease_external_link.dart';
+import 'package:medical_center_patient/pages/home_page/widgets/disease_external_link_widget.dart';
+import 'package:medical_center_patient/pages/home_page/widgets/start_diagnosis_home_page_button.dart';
 import '../../core/ui_utils/spacing_utils.dart';
 import 'widgets/home_page_top_header_widget.dart';
-import '../navigation_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +19,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Future<List<DiseaseExternalLink>> homeFeedFuture;
+
+  @override
+  void initState() {
+    homeFeedFuture = getHomeFeed();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,79 +40,61 @@ class _HomePageState extends State<HomePage> {
         ),
         AddVerticalSpacing(value: 8.h),
         Expanded(
-          child: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            children: [
-              AddVerticalSpacing(value: 10.h),
-              const StartDiagnosisHomePageButton(),
-            ],
+          child: RefreshIndicator(
+            onRefresh: () async {
+              setState(() {
+                homeFeedFuture = getHomeFeed();
+              });
+            },
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              children: [
+                AddVerticalSpacing(value: 10.h),
+                const StartDiagnosisHomePageButton(),
+                AddVerticalSpacing(value: 15.h),
+                Padding(
+                  padding: EdgeInsets.only(right: 15.w),
+                  child: Text(
+                    'بعض المقالات التي اخترناها لك',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+                CustomFutureBuilder(
+                  future: homeFeedFuture,
+                  widgetToDisplayWhileLoading: SizedBox(
+                    height: 250.h,
+                    child: const Center(
+                      child: LinearLoadingIndicatorWidget(),
+                    ),
+                  ),
+                  builder: (context, links) => ListView.separated(
+                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                    shrinkWrap: true,
+                    itemCount: links.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => DiseaseExternalLinkWidget(
+                      diseaseExternalLink: links[index],
+                    ),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const CustomDivider();
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
-}
 
-class StartDiagnosisHomePageButton extends StatelessWidget {
-  const StartDiagnosisHomePageButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.r),
-        color: secondaryContainer,
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 5.h),
-            color: Colors.black.withOpacity(0.08),
-            blurRadius: 8,
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            left: -20.w,
-            child: Icon(
-              Icons.monitor_heart,
-              size: 130.sp,
-              color: secondary.withOpacity(0.1),
-            ),
-          ),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.white.withOpacity(0.3),
-              onTap: () => NavigationController.startNewDiagnosis(),
-              borderRadius: BorderRadius.circular(10.r),
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'هل من خطب ما؟',
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                      ),
-                    ),
-                    AddVerticalSpacing(value: 6.h),
-                    Text(
-                      'قم بإجراء فحص طبي ومن ثم متابعة الحالة مع أحد الأطباء لدينا',
-                      style: TextStyle(
-                        fontSize: 22.sp,
-                        color: secondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
+  Future<List<DiseaseExternalLink>> getHomeFeed() async {
+    return await HttpService.parsedMultiGet(
+      endPoint: 'feed/',
+      mapper: DiseaseExternalLink.fromMap,
     );
   }
 }

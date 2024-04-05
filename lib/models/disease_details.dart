@@ -2,14 +2,15 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+
 import 'package:medical_center_patient/models/disease.dart';
-import 'package:medical_center_patient/models/disease_external_link.dart';
+import 'package:medical_center_patient/models/external_link.dart';
 import 'package:medical_center_patient/models/medicine.dart';
 
 class DiseaseDetails {
   final Disease disease;
   final List<Medicine> suggestedMedicines;
-  final List<DiseaseExternalLink> externalLinks;
+  final List<ExternalLink> externalLinks;
   DiseaseDetails({
     required this.disease,
     required this.suggestedMedicines,
@@ -19,7 +20,7 @@ class DiseaseDetails {
   DiseaseDetails copyWith({
     Disease? disease,
     List<Medicine>? suggestedMedicines,
-    List<DiseaseExternalLink>? externalLinks,
+    List<ExternalLink>? externalLinks,
   }) {
     return DiseaseDetails(
       disease: disease ?? this.disease,
@@ -40,13 +41,13 @@ class DiseaseDetails {
     return DiseaseDetails(
       disease: Disease.fromMap(map['disease'] as Map<String, dynamic>),
       suggestedMedicines: List<Medicine>.from(
-        (map['suggestedMedicines'] as List).map<Medicine>(
+        (map['suggestedMedicines']).map<Medicine>(
           (x) => Medicine.fromMap(x as Map<String, dynamic>),
         ),
       ),
-      externalLinks: List<DiseaseExternalLink>.from(
-        (map['externalLinks'] as List).map<DiseaseExternalLink>(
-          (x) => DiseaseExternalLink.fromMap(x as Map<String, dynamic>),
+      externalLinks: List<ExternalLink>.from(
+        (map['externalLinks']).map<ExternalLink>(
+          (x) => ExternalLink.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );
