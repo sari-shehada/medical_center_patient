@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/services/url_launcher_service.dart';
-import 'package:medical_center_patient/models/external_link.dart';
-import 'package:medical_center_patient/models/medicine.dart';
+import 'package:medical_center_patient/core/widgets/custom_divider.dart';
+import 'package:medical_center_patient/core/widgets/title_details_spaced_widget.dart';
+import 'package:medical_center_patient/pages/diagnosis_details_page/widgets/external_links_list_widget.dart';
+import 'package:medical_center_patient/pages/diagnosis_details_page/widgets/recommended_medicines_list_widget.dart';
 import '../../config/theme/app_colors.dart';
 import '../../core/extensions/date_time_extensions.dart';
 import '../../core/ui_utils/spacing_utils.dart';
@@ -122,6 +123,7 @@ class _MedicalDiagnosisDetailsPageState
                   ),
                 ],
               ),
+              AddVerticalSpacing(value: 10.h),
               Expanded(
                 child: TabBarView(
                   controller: tabController,
@@ -140,155 +142,6 @@ class _MedicalDiagnosisDetailsPageState
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class CustomDivider extends StatelessWidget {
-  const CustomDivider({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(
-      color: Colors.grey.withOpacity(0.5),
-    );
-  }
-}
-
-class TitleDetailsSpacedWidget extends StatelessWidget {
-  const TitleDetailsSpacedWidget({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.details,
-  });
-
-  final IconData icon;
-  final String title;
-  final String details;
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 6.w),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.grey.shade700,
-          ),
-          AddHorizontalSpacing(value: 6.w),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 15.sp,
-              color: Colors.grey.shade700,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            details,
-            style: TextStyle(
-              fontSize: 15.sp,
-              color: secondary,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ExternalLinksListWidget extends StatelessWidget {
-  const ExternalLinksListWidget({
-    super.key,
-    required this.externalLinks,
-  });
-  final List<ExternalLink> externalLinks;
-  @override
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        externalLinks.length,
-        (index) {
-          ExternalLink link = externalLinks[index];
-          return ListTile(
-            onTap: () => UrlLauncherService.launchUrl(
-              url: link.link,
-            ),
-            minLeadingWidth: 25.w,
-            title: Text(
-              link.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 15.sp,
-              ),
-            ),
-            subtitle: Text(
-              link.brief,
-              maxLines: 2,
-              style: TextStyle(
-                fontSize: 11.sp,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
-              child: Image.network(
-                link.imageUrl,
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class RecommendedMedicinesListWidget extends StatelessWidget {
-  const RecommendedMedicinesListWidget({
-    super.key,
-    required this.medicines,
-  });
-  final List<Medicine> medicines;
-  @override
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        medicines.length,
-        (index) {
-          Medicine medicine = medicines[index];
-          return ListTile(
-            minLeadingWidth: 25.w,
-            title: Text(
-              medicine.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 15.sp,
-              ),
-            ),
-            // subtitle: Text(
-            //   medicine.brief,
-            //   maxLines: 2,
-            //   style: TextStyle(
-            //     fontSize: 11.sp,
-            //   ),
-            //   overflow: TextOverflow.ellipsis,
-            // ),
-            leading: ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
-              child: Image.network(
-                medicine.imageUrl,
-              ),
-            ),
-          );
-        },
       ),
     );
   }

@@ -40,7 +40,7 @@ class MedicalDiagnosisWidget extends StatelessWidget {
                 Text(
                   diagnosisDetails.diagnosis.diagnosisDateTime.getDateOnly(),
                   style: const TextStyle(
-                    color: secondary,
+                    color: secondaryColor,
                   ),
                 ),
               ],
@@ -65,7 +65,7 @@ class MedicalDiagnosisWidget extends StatelessWidget {
                 Text(
                   diagnosisDetails.symptoms.length.toString(),
                   style: const TextStyle(
-                    color: secondary,
+                    color: secondaryColor,
                   ),
                 ),
               ],

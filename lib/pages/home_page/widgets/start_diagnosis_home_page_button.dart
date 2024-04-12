@@ -28,7 +28,7 @@ class StartDiagnosisHomePageButton extends StatelessWidget {
             child: Icon(
               Icons.monitor_heart,
               size: 130.sp,
-              color: secondary.withOpacity(0.1),
+              color: secondaryColor.withOpacity(0.1),
             ),
           ),
           Material(
@@ -54,7 +54,7 @@ class StartDiagnosisHomePageButton extends StatelessWidget {
                       'قم بإجراء فحص طبي ومن ثم متابعة الحالة مع أحد الأطباء لدينا',
                       style: TextStyle(
                         fontSize: 22.sp,
-                        color: secondary,
+                        color: secondaryColor,
                       ),
                     ),
                   ],

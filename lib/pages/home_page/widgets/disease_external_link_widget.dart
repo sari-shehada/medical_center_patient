@@ -15,7 +15,7 @@ class DiseaseExternalLinkWidget extends StatelessWidget {
       onTap: () => UrlLauncherService.launchUrl(
         url: diseaseExternalLink.externalLink.link,
       ),
-      minLeadingWidth: 25.w,
+      minLeadingWidth: 60.w,
       title: Text(
         diseaseExternalLink.externalLink.title,
         maxLines: 1,
@@ -49,6 +49,7 @@ class DiseaseExternalLinkWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         child: Image.network(
           diseaseExternalLink.externalLink.imageUrl,
+          width: 60.w,
         ),
       ),
     );

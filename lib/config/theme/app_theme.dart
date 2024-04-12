@@ -9,7 +9,7 @@ ThemeData get lightTheme => ThemeData(
         brightness: Brightness.light,
         primary: primaryColor,
         onPrimary: onPrimary,
-        secondary: secondary,
+        secondary: secondaryColor,
         onSecondary: onPrimary,
         error: error,
         onError: onError,
