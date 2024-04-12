@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:medical_center_patient/config/theme/app_colors.dart';
 import 'package:medical_center_patient/core/extensions/date_time_extensions.dart';
 import 'package:medical_center_patient/core/ui_utils/buttons/custom_icon_button.dart';
@@ -7,6 +8,7 @@ import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
 import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
 import 'package:medical_center_patient/managers/medical_cases_manager.dart';
 import 'package:medical_center_patient/models/medical_case_details.dart';
+import 'package:medical_center_patient/pages/medical_case_messages_page/medical_case_messages_page.dart';
 
 class MedicalCasesPage extends StatefulWidget {
   const MedicalCasesPage({super.key});
@@ -210,7 +212,11 @@ class EndedMedicalCaseCard extends StatelessWidget {
       ),
       trailing: CustomIconButton(
         iconData: Icons.chat,
-        onTap: () {},
+        onTap: () => Get.to(
+          () => MedicalCaseChatPage(
+            medicalCaseDetails: medicalCaseDetails,
+          ),
+        ),
       ),
     );
   }
