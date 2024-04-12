@@ -1,9 +1,11 @@
+import 'package:flutter/material.dart';
+
 import '../core/exceptions/not_found_exception.dart';
 import '../core/services/http_service.dart';
 import '../core/services/shared_prefs_service.dart';
 import '../models/patient_info.dart';
 
-class AccountManager {
+class AccountManager with ChangeNotifier {
   AccountManager._({
     this.user,
     required this.isLoggedIn,
@@ -34,6 +36,14 @@ class AccountManager {
     await _saveUserIdToLocalStorage(userInfo.id);
     user = userInfo;
     isLoggedIn = true;
+    notifyListeners();
+  }
+
+  Future<void> logout(PatientInfo userInfo) async {
+    await SharedPreferencesService.instance.plugin.remove('userId');
+    user = null;
+    isLoggedIn = false;
+    notifyListeners();
   }
 
   static Future<PatientInfo> _getPatientInfo(int id) async {

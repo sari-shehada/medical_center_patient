@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:medical_center_patient/core/services/http_service.dart';
+import 'package:medical_center_patient/core/services/snackbar_service.dart';
+import 'package:medical_center_patient/core/ui_utils/buttons/custom_filled_button.dart';
 import 'package:medical_center_patient/core/widgets/custom_divider.dart';
 import 'package:medical_center_patient/core/widgets/title_details_spaced_widget.dart';
+import 'package:medical_center_patient/managers/account_manager.dart';
+import 'package:medical_center_patient/managers/diagnosis_history_manager.dart';
+import 'package:medical_center_patient/managers/medical_cases_manager.dart';
 import 'package:medical_center_patient/pages/diagnosis_details_page/widgets/external_links_list_widget.dart';
 import 'package:medical_center_patient/pages/diagnosis_details_page/widgets/recommended_medicines_list_widget.dart';
 import '../../config/theme/app_colors.dart';
@@ -10,8 +17,10 @@ import '../../core/ui_utils/spacing_utils.dart';
 import 'models/medical_diagnosis_details.dart';
 
 class MedicalDiagnosisDetailsPage extends StatefulWidget {
-  const MedicalDiagnosisDetailsPage(
-      {super.key, required this.diagnosisDetails});
+  const MedicalDiagnosisDetailsPage({
+    super.key,
+    required this.diagnosisDetails,
+  });
 
   final MedicalDiagnosisDetails diagnosisDetails;
 
@@ -24,9 +33,11 @@ class _MedicalDiagnosisDetailsPageState
     extends State<MedicalDiagnosisDetailsPage> with TickerProviderStateMixin {
   late TabController tabController;
 
+  late MedicalDiagnosisDetails diagnosisDetails;
   @override
   void initState() {
     tabController = TabController(vsync: this, length: 2);
+    diagnosisDetails = widget.diagnosisDetails;
     super.initState();
   }
 
@@ -73,10 +84,29 @@ class _MedicalDiagnosisDetailsPageState
               TitleDetailsSpacedWidget(
                 icon: Icons.monitor_heart_outlined,
                 title: 'تم طلب معاينة من قبل احد الأطباء؟',
-                details: widget.diagnosisDetails.diagnosis
-                        .isSubmittedForFurtherFollowup
-                    ? 'نعم'
-                    : 'لا',
+                details:
+                    diagnosisDetails.diagnosis.isSubmittedForFurtherFollowup
+                        ? 'نعم'
+                        : 'لا',
+              ),
+              AnimatedSize(
+                duration: 400.milliseconds,
+                curve: Curves.fastLinearToSlowEaseIn,
+                child: diagnosisDetails.diagnosis.isSubmittedForFurtherFollowup
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        child: Align(
+                          child: CustomFilledButton(
+                            height: 40.h,
+                            width: MediaQuery.sizeOf(context).width * .85,
+                            borderRadiusValue: 10.r,
+                            onTap: submitMedicalCase,
+                            buttonStatus: submitMedicalCaseButtonStatus,
+                            child: 'طلب معاينة الحالة',
+                          ),
+                        ),
+                      ),
               ),
               const CustomDivider(),
               Text(
@@ -144,5 +174,49 @@ class _MedicalDiagnosisDetailsPageState
         ),
       ),
     );
+  }
+
+  Rx<CustomButtonStatus> submitMedicalCaseButtonStatus =
+      CustomButtonStatus.enabled.obs;
+  Future<void> submitMedicalCase() async {
+    try {
+      int userId = AccountManager.instance.user!.id;
+      submitMedicalCaseButtonStatus.value = CustomButtonStatus.processing;
+      var result = await HttpService.rawFullResponsePost(
+        endPoint:
+            'patients/$userId/diagnostics/${widget.diagnosisDetails.diagnosis.id}/submitMedicalCase/',
+      );
+      if (result.statusCode == 404) {
+        Get.back();
+        SnackBarService.showErrorSnackbar(
+          'لم يتم العثور على هذا التشخيص, ربما تم حذفه من قبلك',
+        );
+        return;
+      }
+      if (result.statusCode == 400) {
+        SnackBarService.showNeutralSnackbar(
+          'لقد قمت مسبقاً بتقديم طلب المتابعة',
+        );
+      }
+      if (result.statusCode == 200) {
+        SnackBarService.showSuccessSnackbar(
+          'لقد تم تقديم الطلب بنجاح',
+        );
+      }
+      markCaseAsSubmitted();
+    } finally {
+      submitMedicalCaseButtonStatus.value = CustomButtonStatus.enabled;
+    }
+  }
+
+  void markCaseAsSubmitted() {
+    diagnosisDetails = diagnosisDetails.copyWith(
+      diagnosis: diagnosisDetails.diagnosis.copyWith(
+        isSubmittedForFurtherFollowup: true,
+      ),
+    );
+    DiagnosisHistoryManager.instance.updateHistory();
+    MedicalCasesManager.instance.updateHistory();
+    setState(() {});
   }
 }

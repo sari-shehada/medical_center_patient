@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_center_patient/pages/medical_cases_page/medical_cases_page.dart';
 import '../diagnosis_history_page/diagnosis_history_page.dart';
 import '../home_page/home_page.dart';
 
@@ -33,7 +34,7 @@ class _DashboardState extends State<Dashboard> with TickerProviderStateMixin {
           children: const [
             HomePage(),
             DiagnosisHistoryPage(),
-            SizedBox(),
+            MedicalCasesPage(),
           ],
         ),
       ),

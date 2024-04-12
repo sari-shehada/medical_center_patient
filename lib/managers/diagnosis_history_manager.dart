@@ -4,7 +4,15 @@ import 'account_manager.dart';
 import '../pages/diagnosis_details_page/models/medical_diagnosis_details.dart';
 
 class DiagnosisHistoryManager with ChangeNotifier {
-  DiagnosisHistoryManager._();
+  DiagnosisHistoryManager._() {
+    AccountManager.instance.addListener(
+      () {
+        if (!AccountManager.instance.isLoggedIn) {
+          _diagnosisHistory = null;
+        }
+      },
+    );
+  }
 
   static DiagnosisHistoryManager instance = DiagnosisHistoryManager._();
 
