@@ -41,10 +41,15 @@ class MedicalCasesManager with ChangeNotifier {
       ),
     );
 
+    var currentCases = result
+        .where((element) => element.medicalCase.status != 'ended')
+        .toList();
+    currentCases.sort(
+      (a, b) => a.medicalCase.status.compareTo(b.medicalCase.status),
+    );
+
     return SeparatedMedicalCases(
-      currentCases: result
-          .where((element) => element.medicalCase.status != 'ended')
-          .toList(),
+      currentCases: currentCases.reversed.toList(),
       endedCases: result
           .where((element) => element.medicalCase.status == 'ended')
           .toList(),
