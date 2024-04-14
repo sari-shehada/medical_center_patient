@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:medical_center_patient/pages/login_page/login_page.dart';
 
 import '../core/exceptions/not_found_exception.dart';
 import '../core/services/http_service.dart';
@@ -39,10 +41,13 @@ class AccountManager with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> logout(PatientInfo userInfo) async {
+  Future<void> logout() async {
     await SharedPreferencesService.instance.plugin.remove('userId');
     user = null;
     isLoggedIn = false;
+    Get.offAll(
+      () => const LoginPage(),
+    );
     notifyListeners();
   }
 

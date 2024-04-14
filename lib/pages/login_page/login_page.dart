@@ -33,11 +33,11 @@ class _LoginPageState extends State<LoginPage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           children: [
-            AddVerticalSpacing(value: MediaQuery.sizeOf(context).height * .35),
+            AddVerticalSpacing(value: MediaQuery.sizeOf(context).height * .25),
             AppLogoWidget(
-              size: 120.sp,
+              size: 200.sp,
             ),
-            AddVerticalSpacing(value: 20.h),
+            AddVerticalSpacing(value: 35.h),
             Align(
               child: Text(
                 'مرحبا بك في المركز الطبي',
