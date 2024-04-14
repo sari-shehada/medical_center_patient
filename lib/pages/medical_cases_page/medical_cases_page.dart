@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/core/widgets/custom_future_builder.dart';
-import 'package:medical_center_patient/managers/medical_cases_manager.dart';
-import 'package:medical_center_patient/pages/medical_cases_page/widgets/current_medical_case_card.dart';
-import 'package:medical_center_patient/pages/medical_cases_page/widgets/ended_medical_case_card.dart';
-import 'package:medical_center_patient/pages/medical_cases_page/widgets/medical_case_list_widget_widget.dart';
+import '../../core/ui_utils/spacing_utils.dart';
+import '../../core/widgets/custom_future_builder.dart';
+import '../../managers/medical_cases_manager.dart';
+import 'widgets/current_medical_case_card.dart';
+import 'widgets/ended_medical_case_card.dart';
+import 'widgets/medical_case_list_widget_widget.dart';
 
 class MedicalCasesPage extends StatefulWidget {
   const MedicalCasesPage({super.key});

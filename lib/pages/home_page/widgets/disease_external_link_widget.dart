@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/services/url_launcher_service.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/pages/home_page/models/disease_external_link.dart';
+import '../../../core/services/url_launcher_service.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
+import '../models/disease_external_link.dart';
 
 class DiseaseExternalLinkWidget extends StatelessWidget {
   const DiseaseExternalLinkWidget(

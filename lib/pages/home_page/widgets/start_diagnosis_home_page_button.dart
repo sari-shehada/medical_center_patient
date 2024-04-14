@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/pages/navigation_controller.dart';
+import '../../../config/theme/app_colors.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
+import '../../navigation_controller.dart';
 
 class StartDiagnosisHomePageButton extends StatelessWidget {
   const StartDiagnosisHomePageButton({super.key});

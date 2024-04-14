@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/services/url_launcher_service.dart';
-import 'package:medical_center_patient/models/external_link.dart';
+import '../../../core/services/url_launcher_service.dart';
+import '../../../models/external_link.dart';
 
 class ExternalLinksListWidget extends StatelessWidget {
   const ExternalLinksListWidget({

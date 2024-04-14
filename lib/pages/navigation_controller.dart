@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import 'dashboard/dashboard.dart';
 import 'diagnosis_details_page/diagnosis_details_page.dart';
 import 'diagnosis_details_page/models/medical_diagnosis_details.dart';

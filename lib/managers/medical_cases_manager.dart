@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medical_center_patient/models/medical_case_details.dart';
-import 'package:medical_center_patient/models/separated_medical_cases.dart';
+import '../models/medical_case_details.dart';
+import '../models/separated_medical_cases.dart';
 import '../core/services/http_service.dart';
 import 'account_manager.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/pages/diagnosis_history_page/widgets/empty_diagnosis_history_widget.dart';
+import 'widgets/empty_diagnosis_history_widget.dart';
 import '../../core/ui_utils/spacing_utils.dart';
 import '../../core/widgets/custom_future_builder.dart';
 import '../../managers/diagnosis_history_manager.dart';

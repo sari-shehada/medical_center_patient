@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
+import '../../../config/theme/app_colors.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
 
 class MessageBottomInputWidget extends StatefulWidget {
   const MessageBottomInputWidget({

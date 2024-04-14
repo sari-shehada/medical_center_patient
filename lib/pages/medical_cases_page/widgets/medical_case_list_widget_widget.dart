@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
-import 'package:medical_center_patient/managers/medical_cases_manager.dart';
-import 'package:medical_center_patient/models/medical_case_details.dart';
-import 'package:medical_center_patient/pages/medical_cases_page/widgets/empty_medical_case_widget.dart';
-import 'package:medical_center_patient/pages/medical_cases_page/widgets/ended_medical_case_card.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
+import '../../../managers/medical_cases_manager.dart';
+import '../../../models/medical_case_details.dart';
+import 'empty_medical_case_widget.dart';
+import 'ended_medical_case_card.dart';
 
 class MedicalCaseListViewWidget extends StatelessWidget {
   const MedicalCaseListViewWidget({

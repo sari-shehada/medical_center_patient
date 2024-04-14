@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
+import '../../../core/ui_utils/spacing_utils.dart';
 
 class EmptyDiagnosisHistoryWidget extends StatelessWidget {
   const EmptyDiagnosisHistoryWidget({super.key});

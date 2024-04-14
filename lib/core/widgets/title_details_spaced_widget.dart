@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_center_patient/config/theme/app_colors.dart';
-import 'package:medical_center_patient/core/ui_utils/spacing_utils.dart';
+import '../../config/theme/app_colors.dart';
+import '../ui_utils/spacing_utils.dart';
 
 class TitleDetailsSpacedWidget extends StatelessWidget {
   const TitleDetailsSpacedWidget({
