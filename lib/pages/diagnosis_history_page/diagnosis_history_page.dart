@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_center_patient/pages/diagnosis_history_page/widgets/empty_diagnosis_history_widget.dart';
 import '../../core/ui_utils/spacing_utils.dart';
 import '../../core/widgets/custom_future_builder.dart';
 import '../../managers/diagnosis_history_manager.dart';
@@ -55,23 +56,23 @@ class _DiagnosisHistoryPageState extends State<DiagnosisHistoryPage> {
           child: RefreshIndicator(
             onRefresh: () async =>
                 DiagnosisHistoryManager.instance.updateHistory(),
-            child: ListView(
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              children: [
-                AddVerticalSpacing(value: 10.h),
-                CustomFutureBuilder(
-                  future: DiagnosisHistoryManager.instance.diagnosisHistory,
-                  builder: (context, snapshot) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      snapshot.length,
-                      (index) => MedicalDiagnosisWidget(
-                        diagnosisDetails: snapshot[index],
+              child: CustomFutureBuilder(
+                future: DiagnosisHistoryManager.instance.diagnosisHistory,
+                builder: (context, snapshot) => snapshot.isEmpty
+                    ? const EmptyDiagnosisHistoryWidget()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: List.generate(
+                          snapshot.length,
+                          (index) => MedicalDiagnosisWidget(
+                            diagnosisDetails: snapshot[index],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
